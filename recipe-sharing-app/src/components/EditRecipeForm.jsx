@@ -1,13 +1,18 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useRecipeStore } from './recipeStore'; // Adjust the path if necessary
 
 const EditRecipeForm = ({ recipe }) => {
   const [title, setTitle] = useState(recipe.title);
   const [description, setDescription] = useState(recipe.description);
 
+  // Access the updateRecipe action from the Zustand store
+  const updateRecipe = useRecipeStore((state) => state.updateRecipe);
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Logic to update recipe
+    // Update the recipe in the store
+    updateRecipe(recipe.id, { title, description });
   };
 
   return (
