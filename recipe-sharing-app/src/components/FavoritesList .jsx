@@ -11,12 +11,16 @@ const FavoritesList = () => {
   return (
     <div>
       <h2>My Favorites</h2>
-      {favoriteRecipes.map((recipe) => (
-        <div key={recipe.id}>
-          <h3>{recipe.title}</h3>
-          <p>{recipe.description}</p>
-        </div>
-      ))}
+      {favoriteRecipes.length > 0 ? (
+        favoriteRecipes.map((recipe) => (
+          <div key={recipe.id}>
+            <h3>{recipe.title}</h3>
+            <p>{recipe.description}</p>
+          </div>
+        ))
+      ) : (
+        <p>You have not favorited any recipes yet!</p>
+      )}
     </div>
   );
 };
