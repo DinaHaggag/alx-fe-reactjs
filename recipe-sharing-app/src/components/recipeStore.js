@@ -1,24 +1,38 @@
 import create from 'zustand';
 
 const useRecipeStore = create((set) => ({
-  recipes: [], // Initial state for recipes
+  recipes: [],
 
-  // Action to add a new recipe
-  addRecipe: (newRecipe) => set((state) => ({
-    recipes: [...state.recipes, newRecipe]
-  })),
+  // Add searchTerm state
+  searchTerm: '',
 
-  // Action to update an existing recipe
-  updateRecipe: (updatedRecipe) => set((state) => ({
-    recipes: state.recipes.map((recipe) =>
-      recipe.id === updatedRecipe.id ? updatedRecipe : recipe
-    )
-  })),
+  // Action to set the search term
+  setSearchTerm: (term) => set({ searchTerm: term }),
 
-  // Action to delete a recipe
-  deleteRecipe: (recipeId) => set((state) => ({
-    recipes: state.recipes.filter((recipe) => recipe.id !== recipeId)
-  }))
+  // Action to filter recipes based on searchTerm
+  filteredRecipes: [],
+
+  filterRecipes: () =>
+    set((state) => ({
+      filteredRecipes: state.recipes.filter((recipe) =>
+        recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
+      ),
+    })),
+
+  // Existing actions (addRecipe, updateRecipe, deleteRecipe)
+  addRecipe: (newRecipe) => set((state) => ({ recipes: [...state.recipes, newRecipe] })),
+  
+  updateRecipe: (updatedRecipe) =>
+    set((state) => ({
+      recipes: state.recipes.map((recipe) =>
+        recipe.id === updatedRecipe.id ? updatedRecipe : recipe
+      ),
+    })),
+  
+  deleteRecipe: (recipeId) =>
+    set((state) => ({
+      recipes: state.recipes.filter((recipe) => recipe.id !== recipeId),
+    })),
 }));
 
 export default useRecipeStore;
