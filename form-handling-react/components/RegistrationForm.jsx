@@ -1,71 +1,43 @@
 
-import { useFormik } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 function RegistrationForm() {
-  // Set up formik
-  const formik = useFormik({
-    initialValues: {
-      username: '',
-      email: '',
-      password: '',
-    },
-    validationSchema: Yup.object({
-      username: Yup.string().required('Username is required'),
-      email: Yup.string().email('Invalid email address').required('Email is required'),
-      password: Yup.string().required('Password is required'),
-    }),
-    onSubmit: (values) => {
-      console.log(values);
-    },
-  });
-
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div>
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.username}
-        />
-        {formik.touched.username && formik.errors.username ? (
-          <div style={{ color: 'red' }}>{formik.errors.username}</div>
-        ) : null}
-      </div>
+    <Formik
+      initialValues={{
+        username: '',
+        email: '',
+        password: '',
+      }}
+      validationSchema={Yup.object({
+        username: Yup.string().required('Username is required'),
+        email: Yup.string().email('Invalid email address').required('Email is required'),
+        password: Yup.string().required('Password is required'),
+      })}
+      onSubmit={(values) => {
+        console.log(values);
+      }}
+    >
+      <Form>
+        <div>
+          <Field name="username" type="text" placeholder="Username" />
+          <ErrorMessage name="username" component="div" style={{ color: 'red' }} />
+        </div>
 
-      <div>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.email}
-        />
-        {formik.touched.email && formik.errors.email ? (
-          <div style={{ color: 'red' }}>{formik.errors.email}</div>
-        ) : null}
-      </div>
+        <div>
+          <Field name="email" type="email" placeholder="Email" />
+          <ErrorMessage name="email" component="div" style={{ color: 'red' }} />
+        </div>
 
-      <div>
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.password}
-        />
-        {formik.touched.password && formik.errors.password ? (
-          <div style={{ color: 'red' }}>{formik.errors.password}</div>
-        ) : null}
-      </div>
+        <div>
+          <Field name="password" type="password" placeholder="Password" />
+          <ErrorMessage name="password" component="div" style={{ color: 'red' }} />
+        </div>
 
-      <button type="submit">Register</button>
-    </form>
+        <button type="submit">Register</button>
+      </Form>
+    </Formik>
   );
 }
 
