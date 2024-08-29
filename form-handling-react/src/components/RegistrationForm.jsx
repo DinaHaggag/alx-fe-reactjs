@@ -1,6 +1,6 @@
-import  { useState } from 'react';
+import React, { useState } from 'react';
 
-function RegistrationForm() {
+const RegistrationForm = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -10,16 +10,10 @@ function RegistrationForm() {
     event.preventDefault();
     let formErrors = {};
 
-    // Manual validation
-    if (!username) {
-      formErrors.username = "Username is required";
-    }
-    if (!email) {
-      formErrors.email = "Email is required";
-    }
-    if (!password) {
-      formErrors.password = "Password is required";
-    }
+    // Validation
+    if (!username) formErrors.username = "Username is required";
+    if (!email) formErrors.email = "Email is required";
+    if (!password) formErrors.password = "Password is required";
 
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
@@ -33,9 +27,10 @@ function RegistrationForm() {
   return (
     <form onSubmit={handleSubmit}>
       <div>
+        <label htmlFor="username">Username:</label>
         <input
           type="text"
-          placeholder="Username"
+          id="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
@@ -43,9 +38,10 @@ function RegistrationForm() {
       </div>
 
       <div>
+        <label htmlFor="email">Email:</label>
         <input
           type="email"
-          placeholder="Email"
+          id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -53,9 +49,10 @@ function RegistrationForm() {
       </div>
 
       <div>
+        <label htmlFor="password">Password:</label>
         <input
           type="password"
-          placeholder="Password"
+          id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -65,6 +62,6 @@ function RegistrationForm() {
       <button type="submit">Register</button>
     </form>
   );
-}
+};
 
 export default RegistrationForm;
