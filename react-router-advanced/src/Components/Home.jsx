@@ -1,4 +1,5 @@
 
+
 const Home = () => {
   const login = () => localStorage.setItem('auth', 'true');
   const logout = () => localStorage.removeItem('auth');
