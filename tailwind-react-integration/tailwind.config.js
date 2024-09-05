@@ -1,11 +1,16 @@
 // tailwind.config.js
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"], // This ensures Tailwind checks for classes inside your components.
-  
-  darkMode: 'class', // Optional. If you don't need dark mode, you can remove this.
+  // In Tailwind CSS v3.x, the `purge` option is replaced by `content`.
+  content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
+
+  // You can optionally configure `darkMode` here if needed (media or class-based).
+  darkMode: 'class', // or 'media', or remove entirely if not needed.
+
+  // Extend Tailwind’s default theme here if you want custom styles.
   theme: {
     extend: {},
   },
-  plugins: [],
-};
 
+  // `variants` is no longer needed in Tailwind v3.x, as all variants are enabled by default.
+  plugins: [], // If you want to use Tailwind plugins, add them here.
+};
