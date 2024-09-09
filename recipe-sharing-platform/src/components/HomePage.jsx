@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   const [recipes, setRecipes] = useState([]);
 
-  // Fetching mock data from data.json
   useEffect(() => {
     fetch('/data.json')
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((data) => setRecipes(data));
   }, []);
 
@@ -19,27 +19,15 @@ const HomePage = () => {
             key={recipe.id}
             className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300"
           >
-            {/* Recipe Image */}
-            <img
-              src={recipe.image}
-              alt={recipe.title}
-              className="w-full h-48 object-cover"
-            />
-
-            {/* Recipe Info */}
+            <img src={recipe.image} alt={recipe.title} className="w-full h-48 object-cover" />
             <div className="p-4">
               <h2 className="font-bold text-xl mb-2">{recipe.title}</h2>
               <p className="text-gray-700">{recipe.summary}</p>
             </div>
-
-            {/* View Details Link */}
             <div className="p-4 text-center">
-              <a
-                href={`/recipe/${recipe.id}`}
-                className="text-blue-500 hover:underline"
-              >
+              <Link to={`/recipe/${recipe.id}`} className="text-blue-500 hover:underline">
                 View Details
-              </a>
+              </Link>
             </div>
           </div>
         ))}
