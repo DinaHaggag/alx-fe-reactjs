@@ -3,20 +3,20 @@ import { useState } from 'react';
 const AddRecipeForm = () => {
   const [title, setTitle] = useState('');
   const [ingredients, setIngredients] = useState('');
-  const [instructions, setInstructions] = useState('');
+  const [steps, setSteps] = useState('');  // Rename instructions to steps
   const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!title || !ingredients || !instructions) {
+    if (!title || !ingredients || !steps) {  // Check for the steps field
       setError('Please fill out all fields.');
       return;
     }
 
-    // Logic to handle adding a new recipe (e.g., API call or updating state)
+    // Handle the form submission logic
     setError('');
-    console.log('Recipe submitted:', { title, ingredients, instructions });
+    console.log('Recipe submitted:', { title, ingredients, steps });
   };
 
   return (
@@ -44,12 +44,12 @@ const AddRecipeForm = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2">Instructions</label>
+          <label className="block text-gray-700 mb-2">Steps</label>  {/* Rename label */}
           <textarea
-            value={instructions}
-            onChange={(e) => setInstructions(e.target.value)}
+            value={steps}
+            onChange={(e) => setSteps(e.target.value)}  // Update to setSteps
             className="w-full px-4 py-2 border rounded-lg"
-            placeholder="Enter the cooking instructions"
+            placeholder="Enter the cooking steps"
           />
         </div>
         <div className="text-center">
