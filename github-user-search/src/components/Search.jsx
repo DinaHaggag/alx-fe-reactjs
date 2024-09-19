@@ -13,10 +13,16 @@ const Search = () => {
     setError('');
     try {
       const data = await fetchUserData(username);
-      setUserData(data);
+      // Check if the 'login' field exists in the response to verify user data
+      if (data && data.login) {
+        setUserData(data);
+      } else {
+        setError('Looks like we can’t find the user');
+        setUserData(null); // Clear previous user data if no user found
+      }
     } catch {
-      // Removed the 'err' variable as it was unused
-      setError('Looks like we can’t find the user');
+      setError('Looks like we can’t find the user'); // No 'err' variable used here
+      setUserData(null); // Clear user data on error
     } finally {
       setLoading(false);
     }
@@ -40,6 +46,7 @@ const Search = () => {
         <div>
           <img src={userData.avatar_url} alt="Avatar" width="100" />
           <p>Name: {userData.name}</p>
+          <p>Login: {userData.login}</p> {/* Display GitHub username */}
           <p>GitHub Profile: <a href={userData.html_url}>{userData.html_url}</a></p>
         </div>
       )}
