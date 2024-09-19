@@ -10,21 +10,22 @@ const Search = () => {
   const handleSearch = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError(''); // Reset the error message before a new search
+    setUserData(null); // Reset the previous user data before a new search
+    
     try {
       const data = await fetchUserData(username);
-      // Check if the 'login' field exists in the response to verify user data
+      
+      // Check if the user exists by verifying the presence of the 'login' field
       if (data && data.login) {
-        setUserData(data);
+        setUserData(data); // Set the user data if found
       } else {
-        setError('Looks like we can’t find the user');
-        setUserData(null); // Clear previous user data if no user found
+        setError('Looks like we can’t find the user'); // Set the error message if user not found
       }
     } catch {
-      setError('Looks like we can’t find the user'); // No 'err' variable used here
-      setUserData(null); // Clear user data on error
+      setError('Looks like we can’t find the user'); // Handle any error during the fetch
     } finally {
-      setLoading(false);
+      setLoading(false); // Stop loading indicator after fetch is complete
     }
   };
 
@@ -40,8 +41,13 @@ const Search = () => {
         <button type="submit">Search</button>
       </form>
 
+      {/* Loading indicator */}
       {loading && <p>Loading...</p>}
+      
+      {/* Error message */}
       {error && <p>{error}</p>}
+      
+      {/* User data display */}
       {userData && (
         <div>
           <img src={userData.avatar_url} alt="Avatar" width="100" />
