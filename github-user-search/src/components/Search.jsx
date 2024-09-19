@@ -20,7 +20,7 @@ const Search = () => {
       if (data && data.login) {
         setUserData(data); // Set the user data if found
       } else {
-        setError('Looks like we can’t find the user'); // Set the error message if user not found
+        setError('Looks like we cant find the user'); // Set the error message if user not found
       }
     } catch {
       setError('Looks like we can’t find the user'); // Handle any error during the fetch
