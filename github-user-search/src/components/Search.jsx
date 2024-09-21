@@ -19,7 +19,7 @@ const Search = () => {
       const data = await searchUsers({ username, location, minRepos });
       setUserData(data.items);
     } catch {
-      setError("Looks like we can't find users with the given criteria.");
+      setError("Looks like we cant find the user");
     } finally {
       setLoading(false);
     }
