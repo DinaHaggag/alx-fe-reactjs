@@ -3,8 +3,8 @@ import { searchUsers } from '../services/githubService';
 
 const Search = () => {
   const [username, setUsername] = useState('');
-  const [location, setLocation] = useState(''); // New state for location
-  const [minRepos, setMinRepos] = useState(''); // New state for minimum repositories
+  const [location, setLocation] = useState('');
+  const [minRepos, setMinRepos] = useState('');
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -18,7 +18,7 @@ const Search = () => {
     try {
       const data = await searchUsers({ username, location, minRepos });
       setUserData(data.items);
-    } catch (err) {
+    } catch {
       setError("Looks like we can't find users with the given criteria.");
     } finally {
       setLoading(false);
