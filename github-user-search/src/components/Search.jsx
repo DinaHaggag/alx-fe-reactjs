@@ -3,11 +3,11 @@ import { searchUsers } from '../services/githubService';
 
 const Search = () => {
   const [username, setUsername] = useState('');
-  const [location, setLocation] = useState(''); // New state for location
-  const [minRepos, setMinRepos] = useState(''); // New state for minimum repositories
+  const [location, setLocation] = useState('');
+  const [minRepos, setMinRepos] = useState('');
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(''); // Use error state directly
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -16,9 +16,11 @@ const Search = () => {
     setUserData([]);
 
     try {
+      // Call searchUsers function to get data from the API
       const data = await searchUsers({ username, location, minRepos });
       setUserData(data.items);
-    } catch (err) {
+    } catch (error) {
+      // Use setError to display the error message
       setError("Looks like we can't find users with the given criteria.");
     } finally {
       setLoading(false);
