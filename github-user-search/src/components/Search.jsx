@@ -3,7 +3,7 @@ import { fetchUserData } from '../services/githubService';
 
 const Search = () => {
   const [username, setUsername] = useState('');
-  const [userData, setUserData] = useState(null);
+  const [usersData, setUsersData] = useState([]); // Updated to handle multiple users
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -11,21 +11,23 @@ const Search = () => {
     e.preventDefault();
     setLoading(true);
     setError(''); // Reset the error message before a new search
-    setUserData(null); // Reset the previous user data before a new search
-
+    setUsersData([]); // Reset the previous user data before a new search
+    
     try {
       const data = await fetchUserData(username);
-
-      // Check if the user exists by verifying the presence of the 'login' field
-      if (data && data.login) {
-        setUserData(data); // Set the user data if found
+      
+      // Check if an array of users is returned and set it in state
+      if (data && Array.isArray(data.items)) {
+        setUsersData(data.items); // Assuming `data.items` holds an array of users
+      } else if (data && data.login) {
+        setUsersData([data]); // If a single user is returned, convert to array
       } else {
-        setError('Looks like we can’t find the user'); // Set the error message if user not found
+        setError('Looks like we can’t find the user');
       }
     } catch {
-      setError('Looks like we can’t find the user'); // Handle any error during the fetch
+      setError('Looks like we can’t find the user');
     } finally {
-      setLoading(false); // Stop loading indicator after fetch is complete
+      setLoading(false);
     }
   };
 
@@ -43,19 +45,21 @@ const Search = () => {
 
       {/* Loading indicator */}
       {loading && <p>Loading...</p>}
-
+      
       {/* Error message */}
       {error && <p>{error}</p>}
 
       {/* User data display */}
-      {userData && (
-        <div>
-          <img src={userData.avatar_url} alt="Avatar" width="100" />
-          <p>Name: {userData.name}</p>
-          <p>Login: {userData.login}</p> {/* Display GitHub username */}
-          <p>GitHub Profile: <a href={userData.html_url}>{userData.html_url}</a></p>
-        </div>
-      )}
+      <div>
+        {usersData.length > 0 && usersData.map((user) => (
+          <div key={user.id}>
+            <img src={user.avatar_url} alt="Avatar" width="100" />
+            <p>Name: {user.name || 'No name provided'}</p>
+            <p>Login: {user.login}</p> {/* Display GitHub username */}
+            <p>GitHub Profile: <a href={user.html_url}>{user.html_url}</a></p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
