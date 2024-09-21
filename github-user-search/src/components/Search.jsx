@@ -12,15 +12,15 @@ const Search = () => {
     setLoading(true);
     setError(''); // Reset the error message before a new search
     setUserData(null); // Reset the previous user data before a new search
-    
+
     try {
       const data = await fetchUserData(username);
-      
+
       // Check if the user exists by verifying the presence of the 'login' field
       if (data && data.login) {
         setUserData(data); // Set the user data if found
       } else {
-        setError('Looks like we cant find the user'); // Set the error message if user not found
+        setError('Looks like we can’t find the user'); // Set the error message if user not found
       }
     } catch {
       setError('Looks like we can’t find the user'); // Handle any error during the fetch
@@ -43,10 +43,10 @@ const Search = () => {
 
       {/* Loading indicator */}
       {loading && <p>Loading...</p>}
-      
+
       {/* Error message */}
       {error && <p>{error}</p>}
-      
+
       {/* User data display */}
       {userData && (
         <div>
