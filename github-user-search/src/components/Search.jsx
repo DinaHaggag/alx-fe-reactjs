@@ -59,6 +59,21 @@ const Search = () => {
           <p><a href={user.html_url} target="_blank" rel="noopener noreferrer">View Profile</a></p>
         </div>
       )}
+      {userData.length > 0 && (
+        <ul className="space-y-4 mt-4">
+          {userData.map((user) => (
+            <li key={user.id} className="border p-4 rounded">
+              <img src={user.avatar_url} alt={user.login} className="w-16 h-16 rounded-full" />
+              <p>{user.login}</p>
+              <p>{user.location || 'Location not available'}</p>
+              <p>Repositories: {user.public_repos}</p>
+              <a href={user.html_url} target="_blank" rel="noopener noreferrer">
+                View Profile
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
